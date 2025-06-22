@@ -1,6 +1,3 @@
-Sure! Here’s the full README.md file with everything included — your updated content, correct API key name, GNU AGPL license mention, and a .gitignore reference as well:
-
-⸻
 
 
 🌳 Orchestree
