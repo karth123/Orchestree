@@ -1,0 +1,78 @@
+diagram:
+  name: Azure-Powered Speech Processing Service
+  open: true
+  resources:
+  - id: client
+    name: Client
+    type: custom
+    icon: C:\Users\sonal\Desktop\orchestree-backend\icons\aws\Resource-Icons_06072024\Res_Application-Integration\Res_Amazon-EventBridge_Custom-Event-Bus_48.svg
+  - id: speech-processing-cluster
+    name: Speech Processing Cluster
+    type: cluster
+    of:
+    - id: speech-functions
+      name: Azure Functions
+      type: custom
+      icon: C:\Users\sonal\Desktop\orchestree-backend\icons\azure\compute\10029-icon-service-Function-Apps.svg
+    - id: speech-service
+      name: Azure Speech Service
+      type: custom
+      icon: C:\Users\sonal\Desktop\orchestree-backend\icons\azure\ai + machine learning\00797-icon-service-Speech-Services.svg
+    - id: storage-account
+      name: Azure Storage Account
+      type: custom
+      icon: C:\Users\sonal\Desktop\orchestree-backend\icons\azure\general\10838-icon-service-Storage-Azure-Files.svg
+
+  - id: monitoring-cluster
+    name: Monitoring & Logging Cluster
+    type: cluster
+    of:
+    - id: app-insights
+      name: Azure Application Insights
+      type: custom
+      icon: C:\Users\sonal\Desktop\orchestree-backend\icons\gcp\cloud_monitoring\cloud_monitoring.svg
+
+  - id: api-gateway-cluster
+    name: API Gateway Cluster
+    type: cluster
+    of:
+    - id: api-management
+      name: Azure API Management
+      type: custom
+      icon: C:\Users\sonal\Desktop\orchestree-backend\icons\azure\devops\10042-icon-service-API-Management-Services.svg
+    icon: C:\Users\sonal\Desktop\orchestree-backend\icons\alibaba\K8S Cluster.svg
+  - relates:
+      from: client
+      to: api-gateway-cluster.api-management
+      direction: incoming
+      description: Client initiates the speech processing pipeline
+  - relates:
+      from: speech-processing-cluster.speech-functions
+      to: speech-processing-cluster.speech-service
+      direction: outgoing
+      description: Speech Functions sends audio for processing
+  - relates:
+      from: speech-processing-cluster.speech-service
+      to: speech-processing-cluster.speech-functions
+      direction: outgoing
+      description: Speech Service returns processed audio/text
+  - relates:
+      from: speech-processing-cluster.speech-functions
+      to: speech-processing-cluster.storage-account
+      direction: outgoing
+      description: Stores input/output data in Storage Account
+  - relates:
+      from: speech-processing-cluster.speech-functions
+      to: monitoring-cluster.app-insights
+      direction: outgoing
+      description: Sends logs for monitoring
+  - relates:
+      from: speech-processing-cluster.speech-service
+      to: monitoring-cluster.app-insights
+      direction: outgoing
+      description: Sends logs for monitoring
+  - relates:
+      from: api-gateway-cluster.api-management
+      to: speech-processing-cluster.speech-functions
+      direction: outgoing
+      description: API Management routes requests to Functions

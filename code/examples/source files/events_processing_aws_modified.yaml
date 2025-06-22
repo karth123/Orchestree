@@ -1,0 +1,85 @@
+diagram:
+  name: AWS-Powered Retail Inventory Management System
+  open: true
+  resources:
+  - id: application-processing-cluster
+    name: Application Processing Cluster
+    type: cluster
+    icon: C:\Users\sonal\Desktop\orchestree-backend\icons\alibaba\K8S Cluster.svg
+    of:
+    - id: application-processing-cluster.ec2-instances
+      name: EC2 Instances (Microservices)
+      type: custom
+      icon: C:\Users\sonal\Desktop\orchestree-backend\icons\aws\Resource-Icons_06072024\Res_Application-Integration\Res_Amazon-EventBridge_Custom-Event-Bus_48.svg
+    - id: application-processing-cluster.elastic-load-balancing
+      name: Elastic Load Balancing
+      type: custom
+      icon: C:\Users\sonal\Desktop\orchestree-backend\icons\aws\Resource-Icons_06072024\Res_Application-Integration\Res_Amazon-EventBridge_Custom-Event-Bus_48.svg
+    - id: application-processing-cluster.dynamodb
+      name: DynamoDB (Inventory)
+      type: custom
+      icon: C:\Users\sonal\Desktop\orchestree-backend\icons\aws\Resource-Icons_06072024\Res_Application-Integration\Res_Amazon-EventBridge_Custom-Event-Bus_48.svg
+  - id: data-storage-and-backup-cluster
+    name: Data Storage and Backup Cluster
+    type: cluster
+    icon: C:\Users\sonal\Desktop\orchestree-backend\icons\alibaba\K8S Cluster.svg
+    of:
+    - id: data-storage-and-backup-cluster.rds
+      name: RDS (Sales Data)
+      type: custom
+      icon: C:\Users\sonal\Desktop\orchestree-backend\icons\aws\Resource-Icons_06072024\Res_Application-Integration\Res_Amazon-EventBridge_Custom-Event-Bus_48.svg
+    - id: data-storage-and-backup-cluster.s3
+      name: S3 (Product Images, Backups)
+      type: custom
+      icon: C:\Users\sonal\Desktop\orchestree-backend\icons\aws\Resource-Icons_06072024\Res_Application-Integration\Res_Amazon-EventBridge_Custom-Event-Bus_48.svg
+  - id: ai-ml-insights-cluster
+    name: AI/ML Insights Cluster
+    type: cluster
+    icon: C:\Users\sonal\Desktop\orchestree-backend\icons\alibaba\K8S Cluster.svg
+    of:
+    - id: ai-ml-insights-cluster.sagemaker
+      name: SageMaker (Demand Forecasting)
+      type: custom
+      icon: C:\Users\sonal\Desktop\orchestree-backend\icons\aws\Resource-Icons_06072024\Res_Application-Integration\Res_Amazon-EventBridge_Custom-Event-Bus_48.svg
+    - id: ai-ml-insights-cluster.lambda
+      name: Lambda (Inventory Alerts)
+      type: custom
+      icon: C:\Users\sonal\Desktop\orchestree-backend\icons\aws\Resource-Icons_06072024\Res_Application-Integration\Res_Amazon-EventBridge_Custom-Event-Bus_48.svg
+  - id: monitoring-and-security-cluster
+    name: Monitoring and Security Cluster
+    type: cluster
+    icon: C:\Users\sonal\Desktop\orchestree-backend\icons\alibaba\K8S Cluster.svg
+    of:
+    - id: monitoring-and-security-cluster.cloudwatch
+      name: CloudWatch
+      type: custom
+      icon: C:\Users\sonal\Desktop\orchestree-backend\icons\aws\Resource-Icons_06072024\Res_Application-Integration\Res_Amazon-EventBridge_Custom-Event-Bus_48.svg
+    - id: monitoring-and-security-cluster.iam
+      name: IAM
+      type: custom
+      icon: C:\Users\sonal\Desktop\orchestree-backend\icons\aws\Resource-Icons_06072024\Res_Application-Integration\Res_Amazon-EventBridge_Custom-Event-Bus_48.svg
+  relates:
+  - from: application-processing-cluster.ec2-instances
+    to: application-processing-cluster.dynamodb
+    direction: bidirectional
+    description: EC2 instances access DynamoDB for real-time inventory data.
+  - from: application-processing-cluster.ec2-instances
+    to: data-storage-and-backup-cluster.rds
+    direction: bidirectional
+    description: EC2 instances access RDS for sales data and analytics.
+  - from: application-processing-cluster.ec2-instances
+    to: ai-ml-insights-cluster.sagemaker
+    direction: bidirectional
+    description: EC2 instances send sales data to SageMaker for forecasting.
+  - from: ai-ml-insights-cluster.sagemaker
+    to: ai-ml-insights-cluster.lambda
+    direction: outgoing
+    description: SageMaker triggers Lambda functions for inventory alerts.
+  - from: application-processing-cluster.ec2-instances
+    to: monitoring-and-security-cluster.cloudwatch
+    direction: outgoing
+    description: EC2 instances send logs to CloudWatch for monitoring.
+  - from: application-processing-cluster.ec2-instances
+    to: monitoring-and-security-cluster.iam
+    direction: outgoing
+    description: EC2 instances use IAM for secure access to AWS resources.

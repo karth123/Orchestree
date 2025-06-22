@@ -1,0 +1,93 @@
+diagram:
+  name: AWS-Powered Retail Inventory Management System
+  open: true
+  resources:
+    # Application Processing Cluster
+    - id: application-processing-cluster
+      name: Application Processing Cluster
+      type: cluster
+      icon: aws.architecture.service.icons_06072024.arch_compute.48.arch_amazon.ec2_48
+      of:
+        - id: application-processing-cluster.ec2-instances
+          name: EC2 Instances (Microservices)
+          type: custom
+          icon: aws.architecture.service.icons_06072024.arch_compute.48.arch_amazon.ec2_48
+        - id: application-processing-cluster.elastic-load-balancing
+          name: Elastic Load Balancing
+          type: custom
+          icon: aws.architecture.service.icons_06072024.arch_network.48.arch_aws.elastic.load.balancing_48
+        - id: application-processing-cluster.dynamodb
+          name: DynamoDB (Inventory)
+          type: custom
+          icon: aws.architecture.service.icons_06072024.arch_database.48.arch_aws.dynamodb_48
+
+    # Data Storage and Backup Cluster
+    - id: data-storage-and-backup-cluster
+      name: Data Storage and Backup Cluster
+      type: cluster
+      icon: aws.architecture.service.icons_06072024.arch_storage.48.arch_aws.s3_48
+      of:
+        - id: data-storage-and-backup-cluster.rds
+          name: RDS (Sales Data)
+          type: custom
+          icon: aws.architecture.service.icons_06072024.arch_database.48.arch_aws.rds_48
+        - id: data-storage-and-backup-cluster.s3
+          name: S3 (Product Images, Backups)
+          type: custom
+          icon: aws.architecture.service.icons_06072024.arch_storage.48.arch_aws.s3_48
+
+    # AI/ML Insights Cluster
+    - id: ai-ml-insights-cluster
+      name: AI/ML Insights Cluster
+      type: cluster
+      icon: aws.architecture.service.icons_06072024.arch_ai_and_ml.48.arch_aws.sagemaker_48
+      of:
+        - id: ai-ml-insights-cluster.sagemaker
+          name: SageMaker (Demand Forecasting)
+          type: custom
+          icon: aws.architecture.service.icons_06072024.arch_ai_and_ml.48.arch_aws.sagemaker_48
+        - id: ai-ml-insights-cluster.lambda
+          name: Lambda (Inventory Alerts)
+          type: custom
+          icon: aws.architecture.service.icons_06072024.arch_compute.48.arch_aws.lambda_48
+
+    # Monitoring and Security Cluster
+    - id: monitoring-and-security-cluster
+      name: Monitoring and Security Cluster
+      type: cluster
+      icon: aws.architecture.service.icons_06072024.arch_security.48.arch_aws.cloudwatch_48
+      of:
+        - id: monitoring-and-security-cluster.cloudwatch
+          name: CloudWatch
+          type: custom
+          icon: aws.architecture.service.icons_06072024.arch_security.48.arch_aws.cloudwatch_48
+        - id: monitoring-and-security-cluster.iam
+          name: IAM
+          type: custom
+          icon: aws.architecture.service.icons_06072024.arch_security.48.arch_aws.iam_48
+
+  relates:
+    - from: application-processing-cluster.ec2-instances
+      to: application-processing-cluster.dynamodb
+      direction: bidirectional
+      description: EC2 instances access DynamoDB for real-time inventory data.
+    - from: application-processing-cluster.ec2-instances
+      to: data-storage-and-backup-cluster.rds
+      direction: bidirectional
+      description: EC2 instances access RDS for sales data and analytics.
+    - from: application-processing-cluster.ec2-instances
+      to: ai-ml-insights-cluster.sagemaker
+      direction: bidirectional
+      description: EC2 instances send sales data to SageMaker for forecasting.
+    - from: ai-ml-insights-cluster.sagemaker
+      to: ai-ml-insights-cluster.lambda
+      direction: outgoing
+      description: SageMaker triggers Lambda functions for inventory alerts.
+    - from: application-processing-cluster.ec2-instances
+      to: monitoring-and-security-cluster.cloudwatch
+      direction: outgoing
+      description: EC2 instances send logs to CloudWatch for monitoring.
+    - from: application-processing-cluster.ec2-instances
+      to: monitoring-and-security-cluster.iam
+      direction: outgoing
+      description: EC2 instances use IAM for secure access to AWS resources.

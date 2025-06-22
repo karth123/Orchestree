@@ -1,0 +1,17 @@
+{
+    "title": "Events Processing Architecture",
+    "cloudProviders": [
+        "AWS"
+    ],
+    "icons": [
+        "aws.architecture.service.icons_06072024.arch_containers.16.arch_amazon.eks.cloud_16",
+        "aws.resource.icons_06072024.res_storage.res_amazon.simple.storage.service_s3.standard_48",
+        "aws.architecture.service.icons_06072024.arch_analytics.48.arch_amazon.redshift_48",
+        "aws.architecture.service.icons_06072024.arch_app.integration.48.arch_amazon.simple.queue.service_48",
+        "aws.architecture.service.icons_06072024.arch_containers.48.arch_amazon.ecs.anywhere_48"
+    ],
+    "clusteringDetails": "Web Service from Amazon Compute EKS, Events Storage of S3 type from AWS, Events Analytics service from AWS Database Redshift, Events Queue from AWS SQS, Three Workers from AWS ECS Compute with designations of N1, N2, and N3, Three Processing Lambdas from AWS Lambda Compute with designations of N1, N2, and N3.\n\nThere is an Events Flow Cluster which contains: an Events Queue, a Workers Cluster that consists of the three defined workers (N1, N2, N3) grouped together, and a Processing Cluster that consists of a group of three processing lambdas (N1, N2, N3).",
+    "relationships": "The Web Service passes data to the Workers Cluster within the Events Flow Cluster. The Events Queue in the Events Flow Cluster relates to the Processing Cluster containing the lambdas in an outgoing direction. The Workers Cluster passes data to the Events Queue in an outgoing direction. The Processing Cluster containing the compute lambdas has outgoing relationships to both the Events Storage (S3) and Events Analytics (Redshift) services.",
+    "iconSearch": ""
+
+}

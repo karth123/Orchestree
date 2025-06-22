@@ -1,0 +1,70 @@
+diagram:
+  name: Complex Azure ML Architecture
+  open: true
+  resources:
+    - id: data-ingestion
+      name: Data Ingestion
+      type: custom
+      icon: "C:/Users/sonal/Downloads/Azure_Public_Service_Icons_V19/Azure_Public_Service_Icons/azure/ai + machine learning/00819-icon-service-Form-Recognizers.svg"
+      relates:
+        - to: processing.anomalies
+          direction: outgoing
+    - id: processing
+      name: Data Processing
+      type: cluster
+      of:
+        - id: anomalies
+          name: Anomaly Detection
+          type: custom
+          icon: "C:/Users/sonal/Downloads/Azure_Public_Service_Icons_V19/Azure_Public_Service_Icons/azure/ai + machine learning/00814-icon-service-Anomaly-Detector.svg"
+          relates:
+            - to: training.model
+              direction: outgoing
+        - id: metrics
+          name: Metrics Analysis
+          type: custom
+          icon: "C:/Users/sonal/Downloads/Azure_Public_Service_Icons_V19/Azure_Public_Service_Icons/azure/compute/02409-icon-service-Metrics-Advisor.svg"
+    - id: training
+      name: Model Training
+      type: cluster
+      of:
+        - id: model
+          name: Machine Learning Studio
+          type: custom
+          icon: "C:/Users/sonal/Downloads/Azure_Public_Service_Icons_V19/Azure_Public_Service_Icons/azure/iot/10167-icon-service-Machine-Learning-Studio-Workspaces.svg"
+          relates:
+            - to: deployment.openai
+              direction: outgoing
+    - id: deployment
+      name: Model Deployment
+      type: cluster
+      of:
+        - id: openai
+          name: Azure OpenAI
+          type: custom
+          icon: "C:/Users/sonal/Downloads/Azure_Public_Service_Icons_V19/Azure_Public_Service_Icons/azure/ai + machine learning/03438-icon-service-Azure-OpenAI.svg"
+          relates:
+            - to: monitoring.logs
+              direction: outgoing
+        - id: search
+          name: Serverless Search
+          type: custom
+          icon: "C:/Users/sonal/Downloads/Azure_Public_Service_Icons_V19/Azure_Public_Service_Icons/azure/ai + machine learning/03321-icon-service-Serverless-Search.svg"
+    - id: monitoring
+      name: Monitoring
+      type: cluster
+      of:
+        - id: logs
+          name: Log Analytics
+          type: custom
+          icon: "C:/Users/sonal/Downloads/Azure_Public_Service_Icons_V19/Azure_Public_Service_Icons/azure/ai + machine learning/00799-icon-service-QnA-Makers.svg"
+          relates:
+            - to: deployment.search
+              direction: outgoing
+        - id: safety
+          name: Content Safety
+          type: custom
+          icon: "C:/Users/sonal/Downloads/Azure_Public_Service_Icons_V19/Azure_Public_Service_Icons/azure/ai + machine learning/03390-icon-service-Content-Safety.svg"
+          relates:
+            - to: monitoring.logs
+              direction: outgoing

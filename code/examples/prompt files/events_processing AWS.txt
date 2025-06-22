@@ -1,0 +1,19 @@
+Provide a title of your cloud system architecture and a brief description
+
+The cloud system architecture is called 'Events Processing Architecture' and it is hosted on AWS.
+
+Select cloud providers
+
+AWS
+
+What are the resources used in this cloud system architecture?
+
+Web Service from Amazon Compute EKS, Events Storage of S3 type from AWS, Events Analytics service from AWS Database Redshift, Events Queue from AWS SQS, Three Workers from AWS ECS Compute with designations of N1, N2, and N3, Three Processing Lambdas from AWS Lambda Compute with designations of N1, N2, and N3.
+
+How are these cloud provider resources clustered or grouped? Describe in detail.
+
+There is an Events Flow Cluster which contains: an Events Queue, a Workers Cluster that consists of the three defined workers (N1, N2, N3) grouped together, and a Processing Cluster that consists of a group of three processing lambdas (N1, N2, N3).
+
+Describe the relationships between these resources and clusters/groups
+
+The Web Service passes data to the Workers Cluster within the Events Flow Cluster. The Events Queue in the Events Flow Cluster relates to the Processing Cluster containing the lambdas in an outgoing direction. The Workers Cluster passes data to the Events Queue in an outgoing direction. The Processing Cluster containing the compute lambdas has outgoing relationships to both the Events Storage (S3) and Events Analytics (Redshift) services

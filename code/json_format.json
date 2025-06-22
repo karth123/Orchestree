@@ -1,0 +1,7 @@
+{
+    "Provide a title of your cloud system architecture": "Example title of cloud system architecture",
+    "Select cloud providers": "Multiselect: [AWS, Azure, Google Cloud, IBM Cloud, Oracle Cloud, Alibaba]",
+    "Select resources used in this cloud system architecture": "Multiselect: [Select from provided list of icons]",
+    "How are these cloud provider resources clustered or grouped? Describe in detail": "Example description",
+    "Describe the relationships between these resources and clusters/groups": "Example description"
+}

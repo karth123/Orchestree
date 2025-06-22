@@ -1,0 +1,112 @@
+
+Cloud System Architecture Title: AWS-Powered Retail Inventory Management System
+
+Brief Description:
+
+This architecture outlines a modern and scalable retail inventory management system leveraging AWS's suite of services. The solution integrates real-time inventory tracking, demand forecasting, and supply chain optimization for large-scale retail operations.
+
+Cloud Provider Selection:
+
+Amazon Web Services (AWS) is selected as the cloud provider for its extensive range of compute, storage, and AI/ML services, ensuring scalability and security for global retail operations.
+
+Cloud Resources:
+
+Amazon EC2:
+
+Hosts the core inventory management application.
+Runs microservices for inventory tracking, pricing updates, and supply chain analytics.
+AWS Elastic Load Balancing:
+
+Distributes traffic across multiple EC2 instances.
+Ensures high availability and fault tolerance.
+Amazon RDS (Relational Database Service):
+
+Manages structured inventory and sales data.
+Provides secure and scalable database solutions with MySQL/PostgreSQL engines.
+Amazon DynamoDB:
+
+Stores unstructured data such as product metadata and transaction logs.
+Offers high-speed and low-latency access for frequently queried data.
+Amazon S3:
+
+Stores product images, reports, and backup data.
+Provides a scalable solution for unstructured data.
+AWS Lambda:
+
+Executes on-demand tasks like inventory reconciliation and low-stock alerts.
+Integrates seamlessly with other AWS services for event-driven processing.
+Amazon CloudWatch:
+
+Monitors application performance and logs system activity.
+Tracks KPIs like inventory turnover rates and sales forecasts.
+Amazon API Gateway:
+
+Manages secure API access for internal and external applications.
+Enables integration with third-party services like suppliers and delivery systems.
+AWS IAM:
+
+Implements granular access control for system users.
+Ensures security compliance for all resources.
+Amazon SageMaker:
+
+Builds and deploys ML models for demand forecasting and trend analysis.
+Provides insights for inventory optimization.
+AWS Wavelength:
+
+Enhances performance for real-time inventory updates in retail stores.
+Reduces latency for edge computing scenarios.
+AWS Bottlerocket:
+
+Runs containerized applications for supply chain microservices.
+Simplifies management of lightweight compute environments.
+AWS Elastic Fabric Adapter:
+
+Optimizes high-performance computing (HPC) for complex inventory simulations.
+Accelerates supply chain modeling and analysis.
+AWS NICE DCV and NICE EnginFrame:
+
+Provides remote visualization tools for dashboard analytics.
+Facilitates collaborative planning across distributed teams.
+Amazon Lightsail:
+
+Supports small-scale stores or franchises with simplified compute and database hosting.
+Resource Clustering and Grouping:
+
+Application Processing Cluster:
+
+Amazon EC2 and AWS Elastic Load Balancing: Manage the core application and ensure high availability.
+Amazon DynamoDB: Powers real-time inventory lookups.
+Data Storage and Backup Cluster:
+
+Amazon RDS and Amazon S3: Store structured and unstructured data.
+AI/ML Insights Cluster:
+
+Amazon SageMaker and AWS Lambda: Provide intelligent analytics and automation.
+Monitoring and Security Cluster:
+
+Amazon CloudWatch and AWS IAM: Monitor and secure the system.
+Edge Computing Cluster:
+
+AWS Wavelength and AWS Bottlerocket: Power low-latency, edge scenarios in retail stores.
+Relationships Between Resources and Clusters:
+
+Application Processing Cluster:
+
+EC2 processes incoming API requests routed via API Gateway.
+DynamoDB provides product details for instant responses.
+Data Storage and Backup Cluster:
+
+RDS stores and retrieves transaction details.
+S3 backs up historical data and media assets.
+AI/ML Insights Cluster:
+
+SageMaker analyzes past sales data stored in RDS to predict future trends.
+Lambda triggers alerts for low inventory based on these forecasts.
+Monitoring and Security Cluster:
+
+CloudWatch aggregates logs and alerts administrators of anomalies.
+IAM enforces access policies for system users.
+Edge Computing Cluster:
+
+Wavelength reduces latency for in-store inventory updates.
+Bottlerocket runs containerized microservices for real-time applications.

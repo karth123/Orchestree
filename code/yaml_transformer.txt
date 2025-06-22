@@ -1,0 +1,38 @@
+You are given a YAML configuration below that describes a diagram containing multiple resources. Each resource has fields including an id, a name, a type, and an icon. The icon field currently might have a placeholder path that you need to replace. You are also given a separate, dynamically provided list of allowed icons. Your job is to replace every placeholder icon with one icon chosen from that allowed list.
+
+Important Instructions:
+
+Read the Allowed Icons List Carefully:
+You will be provided with a list of allowed icons (provided below). This list may contain several icon names. You are not allowed to use icons that are not in this list. You must pick an icon exactly as it appears in the allowed list. Do not invent new icons, do not modify the icon names, and do not add suffixes or prefixes to the icon names.
+
+Identify Placeholders:
+Go through the YAML configuration. Locate every icon field that contains a placeholder path (for example, it might look like icon: /path/to/something.svg). You must replace every such placeholder.
+
+Analyze the Resource Concept:
+For each resource with a placeholder icon:
+
+Look at the name of the resource. Does it contain clues as to what the resource represents?
+Look at the type of the resource, if relevant.
+Determine what the resource might conceptually be. For instance, is it a type of service, a storage system, a function, a cluster, or a queue?
+Match Resource to an Icon:
+From the allowed icons list you were given, select the one that best represents the concept of the resource.
+
+If the resource name suggests it is a certain type of component, select an icon that logically matches that type from the allowed list.
+If the resource name or type suggests a category like "cluster", "storage", "function", "queue", "web service", or something else identifiable, pick an icon that fits that category.
+If no icon perfectly matches the concept, choose the closest suitable icon from the allowed list. It is better to pick something reasonably close than to fail or leave a placeholder.
+No Invention or Alteration of Icon Names:
+You must not invent icon names or alter the provided icon names. Use the allowed icon names exactly as they appear in the provided list. For example, if the allowed icon is given as my-special-icon, then you must write icon: my-special-icon exactly, without changing the name.
+
+Replace the Icon Field:
+For every resource that had a placeholder icon, replace it with the chosen icon from the allowed list. After replacement, the icon field must contain exactly one icon name from the allowed list.
+
+Remove All Placeholders:
+Make sure that after you finish, there are no icon: /path/to/... lines left. Every icon field must now point to one of the allowed icons.
+
+Maintain the YAML Structure:
+Do not alter the YAML structure beyond changing the icon values. Keep all resources, their fields, and relationships intact. Only modify the icon values.
+
+Final Output:
+After completing all replacements, produce the full YAML configuration as your output. The final YAML must have all placeholder icons replaced by allowed icons, with no placeholders remaining.
+
+YAML CONFIGURATION TO EDIT AND RESOURCE LIST:

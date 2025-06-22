@@ -1,0 +1,123 @@
+Using that description and the icons provided to you, genberate a yaml configuration following the instructions strictly!!
+
+
+To enforce the requirement that the `relates` section must always reference nodes inside clusters and never directly reference a cluster or group, the prompt can be further refined as follows:
+
+---
+
+### Refined YAML Service Diagram Specification Prompt
+
+You are tasked with generating a **YAML representation** of a service architecture diagram. The goal is to clearly define all components, clusters, their interrelations, and the flow of data. **The YAML will be used as input for visualizing the architecture**, so adherence to the rules of hierarchy, precision in relationships, and clarity in component definitions is paramount.
+
+---
+
+### Guidelines for YAML Structure
+
+1. **Diagram Definition**:
+   - **diagram**: The root of the YAML file should include:
+     - `name`: The descriptive name of the diagram.
+     - `open`: A boolean indicating whether the diagram should initially appear expanded (`true`) or collapsed (`false`).
+
+2. **Resources**:
+   - Define **all individual components** and clusters under `resources`. If a resource is inside the of tag or not a cluster/group type use a direct reference from the set of resource names provided. ensure to use all resource names provided and only those resource names
+   - Each resource must include:
+     - `id`: A globally unique identifier. Pick one only from the set of provided ids.
+     - `name`: A human-readable name for the resource.
+     - `type`: The resource type (e.g., `custom`, `cluster`).
+     - `icon`: A mandatory placeholder file path to an icon for visual enhancement.
+   - Clusters must group related components logically, using:
+     - `id`: Unique ID for the cluster.
+     - `of`: A list of components nested inside the cluster.
+       - **Each component in a cluster must use the hierarchical format** `parent-id.child-id` for its `id` (e.g., `workers-cluster.worker-n1`).
+       - **Clusters themselves cannot be directly referenced** in the `relates` section.
+
+3. **Relationships (`relates`)**:
+   - **Rules for Relationships**:
+    - Indent `relates` PROPERLY! IT MUST BE ONE INDENT AHEAD OF diagram:
+     - **All relationships must reference nodes (not clusters):**
+       - Use hierarchical IDs to point to nodes inside clusters (e.g., `processing-cluster.lambda-n1`).
+       - Direct references to a cluster (e.g., `processing-cluster`) are strictly prohibited.
+     - Each relationship must specify:
+       - `from`: The **hierarchical ID** of the source node (e.g., `cluster1.node1`).
+       - `to`: The **hierarchical ID** of the destination node.
+       - `direction`: The flow of data (`incoming`, `outgoing`, `bidirectional`).
+       - `description`: A short, precise explanation of the relationship.
+
+4. **Key Requirements**:
+   - Hierarchical IDs must follow the format:  
+     - **For components**: Use the `parent-id.child-id` convention (e.g., `web-cluster.service-n1`).
+     - **For relationships**: Always reference individual nodes inside clusters using their hierarchical IDs.
+   - Clusters cannot be endpoints for data flow; relationships must only reference nodes inside clusters.
+
+5. **Example YAML Structure**:
+   ```yaml
+   diagram:
+     name: Example Service Architecture
+     open: true
+     resources:
+     - id: web-cluster
+       name: Web Cluster
+       type: cluster
+       icon: /path/to/web-cluster-icon.svg
+       of:
+       - id: web-cluster.web-service
+         name: Web Service
+         type: custom
+         icon: /path/to/web-service-icon.svg
+       - id: web-cluster.api-gateway
+         name: API Gateway
+         type: custom
+         icon: /path/to/api-gateway-icon.svg
+     - id: db-cluster
+       name: Database Cluster
+       type: cluster
+       icon: /path/to/db-cluster-icon.svg
+       of:
+       - id: db-cluster.database-instance
+         name: Database Instance
+         type: custom
+         icon: /path/to/db-instance-icon.svg
+     - id: logging-service
+       name: Logging Service
+       type: custom
+       icon: /path/to/logging-service-icon.svg
+     relates:
+     - from: web-cluster.web-service
+       to: web-cluster.api-gateway
+       direction: outgoing
+       description: Web Service communicates with API Gateway.
+     - from: web-cluster.api-gateway
+       to: db-cluster.database-instance
+       direction: outgoing
+       description: API Gateway accesses the database.
+     - from: web-cluster.web-service
+       to: logging-service
+       direction: outgoing
+       description: Web Service sends logs to the Logging Service.
+   ```
+
+6. **Cluster and Node Hierarchies**:
+   - Logical clusters group related nodes.
+   - All relationships must occur **at the node level**.
+   - Clusters are organizational units only and cannot be referenced as endpoints for data flow.
+
+---
+
+### Input Description
+
+Create a **YAML file** for a service architecture diagram with the following requirements:
+- **System Name**: Specify the name of the architecture diagram.
+- **Components and Clusters**:
+  - Include all services, clusters, and subcomponents (e.g., web services, queues, processing units, and external clients).
+  - Assign each component a unique `id`, type, and optional icon.
+  - Use **hierarchical IDs** for cluster subcomponents.
+- **Data Flow**:
+  - Clearly describe how data flows between components or clusters.
+  - Use the `from` and `to` fields to reference nodes only—not clusters.
+  - Provide concise descriptions for each relationship.
+- **External Interactions**:
+  - Include external systems and their relationships with internal components.
+- **Monitoring and Logging**:
+  - Define all resources and relationships for monitoring and logging mechanisms.
+
+---
