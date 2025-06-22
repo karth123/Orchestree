@@ -83,3 +83,9 @@ tzdata==2024.1
 uritemplate==4.1.1
 urllib3==2.2.1
 watchdog==4.0.1
+fastapi==0.115.6
+path.py==12.5.0
+pth==0.3.0
+PyJWT==2.10.1
+starlette==0.41.3
+uvicorn==0.32.1
